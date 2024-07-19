@@ -1,0 +1,97 @@
+###Read purchase order
+GET http://localhost:4004/CatalogService/
+###Read metadata of purchase order
+GET http://localhost:4004/CatalogService/$metadata
+### 
+GET http://localhost:4004/CatalogService/AddressSet
+
+###call record of specific employee
+GET http://localhost:4004/CatalogService/EmployeeSet
+
+### get a random PO
+GET http://localhost:4004/CatalogService/POs?$top=5
+###create enty, make sure to add a blank line after content-type
+POST  http://localhost:4004/CatalogService/EmployeeSet
+Content-Type: application/json
+
+{
+    "nameFirst": "Pawan",
+    "nameMiddle": null,
+    "nameLast": "Khantwal",
+    "nameInitials": null,
+    "sex": "F",
+    "language": "E",
+    "loginName": "PAWAN",
+     "Currency_code": "INR",
+     "salaryAmount": "100000",
+    "accountNumber": "111222333",
+    "bankId": "510000655",
+    "bankName": "SBI"
+}
+
+###
+PATCH http://localhost:4004/CatalogService/EmployeeSet/02BD2137-0890-1EEA-A6C2-BB55C19787FB
+Content-Type: application/json
+
+{
+  "nameFirst": "Pawan","Currency_code": "INR",
+  "salaryAmount": 200000
+}
+
+###update on ADdressSEt
+PATCH http://localhost:4004/CatalogService/AddressSet/74867AD200E41EDBA5D8B06885664052
+Content-Type: application/json
+
+{
+  "COUNTRY" : "IN"
+}
+
+### Read data in ReadEmployeeSrv
+GET  http://localhost:4004/mysrvdemo/ReadEmployeeSrv
+### Insert data in InsertEmployeeSrv
+POST http://localhost:4004/mysrvdemo/InsertEmployeeSrv
+Content-Type: application/json
+
+{"ID":"02BD2137-0890-1EEA-A6C2-BB55C1978998",
+  "nameFirst": "Pawan",
+  "nameMiddle": null,
+  "nameLast": "Khantwal",
+  "nameInitials": null,
+  "sex": "F",
+  "language": "E",
+  "loginName": "PAWAN",
+    "Currency_code": "INR",
+    "salaryAmount": "100000",
+  "accountNumber": "111222333",
+  "bankId": "510000655",
+  "bankName": "SBI"
+}
+
+###update call on updateEmployeeSrv
+PATCH http://localhost:4004/mysrvdemo/updateEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19787FB
+Content-Type: application/json
+
+{
+  "ID": "02BD2137-0890-1EEA-A6C2-BB55C19787FB",
+ "nameFirst": "Pawan",
+  "nameMiddle": "kumar",
+  "nameLast": "Khantwal"
+}
+
+### Delete call on deleteEmployeeSrv
+DELETE http://localhost:4004/mysrvdemo/deleteEmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C197A7FB
+
+###testing boost action
+POST http://localhost:4004/CatalogService/POs('74867AD200E41EDBA5D8B0C98DC28052')/boost
+Content-Type: application/json
+
+{}
+
+###testing function largestOrder()
+GET http://localhost:4004/CatalogService/POs('74867AD200E41EDBA5D8B0C98DC28052')/largestOrder()
+
+### get a random PO
+GET http://localhost:4004/CatalogService/POs('74867AD200E41EDBA5D8B0C98DC28052')
+
+### V2 service call- add v2 before service name.
+GET http://localhost:4004/v2/CatalogService/$metadata
