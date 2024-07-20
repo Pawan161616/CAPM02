@@ -90,8 +90,12 @@ context master {
 }
 
 context transaction {
-    entity purchaseorder : common.Amount {
-      key NODE_KEY : GUID;                        	
+    entity purchaseorder  {
+      key NODE_KEY : GUID;   
+      CURRENCY_CODE	:String(4);
+      GROSS_AMOUNT   :Decimal(15,2);     	
+      NET_AMOUNT     :Decimal(15,2);     
+      TAX_AMOUNT     :Decimal(15,2);                     	
       PO_ID : String(24);    	
       PARTNER_GUID: association to master.businesspartner;      	
       LIFECYCLE_STATUS: String(1);	
@@ -99,8 +103,12 @@ context transaction {
       Items: Association to many poitems on Items.PARENT_KEY = $self;
       NOTE: String(256);
     }
-    entity poitems : common.Amount{
-      key NODE_KEY : GUID;                       	
+    entity poitems {
+      key NODE_KEY : GUID;  
+      CURRENCY_CODE	:String(4);
+      GROSS_AMOUNT   :Decimal;     	
+      NET_AMOUNT     :Decimal;     
+      TAX_AMOUNT     :Decimal;                     	
       PARENT_KEY : Association to purchaseorder;              	
       PO_ITEM_POS	: Integer;
       PRODUCT_GUID : Association to master.product;

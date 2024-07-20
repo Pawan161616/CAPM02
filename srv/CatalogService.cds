@@ -19,9 +19,9 @@ service Catalogservice@(path:'/CatalogService') {
         //actions are entity specific ie. only for POs and have to pass a perticular Purchase order 
         //all the actions and functions are triggered only when primary key is passed as parameter to them
         //function is only for reading the data and in actions we can do create,update,delete operations b
-        // function largestOrder() returns array of POs;
+        function largestOrder() returns array of POs;
         action boost();
-    }
+    };
      entity POItems @(
         title: '{i18n>POItems}'
      ) as projection on transaction.poitems{
