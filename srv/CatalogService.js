@@ -10,7 +10,7 @@ module.exports = async function () {
 
   this.before('UPDATE', EmployeeSet, (req, res) => {
     if (parseFloat(req.data.salaryAmount) >= 1000) {
-      req.error(500, "more thean 1lack");
+      req.error(500, "more than 1lack");
     }
 
   });
@@ -19,7 +19,6 @@ module.exports = async function () {
       req.error(500, "India is a big country to play in this league, try something else");
     }
   });
-//bug
   this.on('boost', async req => {
     try {
       const ID = req.params[0];
@@ -34,7 +33,6 @@ module.exports = async function () {
       return "Error" + error.toString();
     }
   });
-//bug
   this.on('largestOrder', async (req) => {
     const tx = cds.tx(req);
     try {
@@ -49,23 +47,23 @@ module.exports = async function () {
 
   });
 //in db table for few records amount is string for rest it is decimal, so here we are converting everthing in Number.
-  this.after('READ',POs, async(req,res)=>{
-    res.results = res.results.map(po => {
-      po.GROSS_AMOUNT = typeof(po.GROSS_AMOUNT) === 'string' ?  Number(po.GROSS_AMOUNT.replaceAll(',','')) : po.GROSS_AMOUNT;
-      po.NET_AMOUNT = typeof(po.NET_AMOUNT) === 'string' ?  Number(po.NET_AMOUNT.replaceAll(',','')) : po.NET_AMOUNT;
-      po.TAX_AMOUNT = typeof(po.TAX_AMOUNT) === 'string' ?  Number(po.TAX_AMOUNT.replaceAll(',','')) : po.TAX_AMOUNT;
-         return po;
-     });
-    return res;
-  });
+  // this.after('READ',POs, async(req,res)=>{
+  //   res.results = res.results.map(po => {
+  //     po.GROSS_AMOUNT = typeof(po.GROSS_AMOUNT) === 'string' ?  Number(po.GROSS_AMOUNT.replaceAll(',','')) : po.GROSS_AMOUNT;
+  //     po.NET_AMOUNT = typeof(po.NET_AMOUNT) === 'string' ?  Number(po.NET_AMOUNT.replaceAll(',','')) : po.NET_AMOUNT;
+  //     po.TAX_AMOUNT = typeof(po.TAX_AMOUNT) === 'string' ?  Number(po.TAX_AMOUNT.replaceAll(',','')) : po.TAX_AMOUNT;
+  //        return po;
+  //    });
+  //   return res;
+  // });
 
-  this.after('READ',POItems , async(req,res)=>{
-    res.results = res.results.map(poItem => {
-      poItem.GROSS_AMOUNT = typeof(poItem.GROSS_AMOUNT) === 'string' ?  Number(poItem.GROSS_AMOUNT.replaceAll(',','')) : poItem.GROSS_AMOUNT;
-      poItem.NET_AMOUNT = typeof(poItem.NET_AMOUNT) === 'string' ?  Number(poItem.NET_AMOUNT.replaceAll(',','')) : poItem.NET_AMOUNT;
-      poItem.TAX_AMOUNT = typeof(poItem.TAX_AMOUNT) === 'string' ?  Number(poItem.TAX_AMOUNT.replaceAll(',','')) : poItem.TAX_AMOUNT;
-         return poItem;
-     });
-    return res;
-  });
+  // this.after('READ',POItems , async(req,res)=>{
+  //   res.results = res.results.map(poItem => {
+  //     poItem.GROSS_AMOUNT = typeof(poItem.GROSS_AMOUNT) === 'string' ?  Number(poItem.GROSS_AMOUNT.replaceAll(',','')) : poItem.GROSS_AMOUNT;
+  //     poItem.NET_AMOUNT = typeof(poItem.NET_AMOUNT) === 'string' ?  Number(poItem.NET_AMOUNT.replaceAll(',','')) : poItem.NET_AMOUNT;
+  //     poItem.TAX_AMOUNT = typeof(poItem.TAX_AMOUNT) === 'string' ?  Number(poItem.TAX_AMOUNT.replaceAll(',','')) : poItem.TAX_AMOUNT;
+  //        return poItem;
+  //    });
+  //   return res;
+  // });
 }
