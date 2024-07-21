@@ -62,8 +62,12 @@ annotate Catalogservice.POs with @(
         Facets  : [
             {
                 $Type: 'UI.ReferenceFacet',
-                Label: 'PO General Information',
+                Label: 'Purchase Order Header Details',
                 Target: ![@UI.FieldGroup#HeaderGeneralInformation]
+            },{
+                $Type: 'UI.ReferenceFacet',
+                Label: 'Line Items',
+                Target: 'Items/@UI.LineItem'
             }
         ],
         FieldGroup#HeaderGeneralInformation : {
@@ -104,3 +108,111 @@ annotate Catalogservice.POs with @(
         },
     }
 );
+
+annotate Catalogservice.POItems with @(
+    UI:{
+        LineItem  : [
+            {
+                $Type:'UI.DataField',
+                Value: PO_ITEM_POS
+            },{
+                $Type:'UI.DataField',
+                Value: PRODUCT_GUID_NODE_KEY
+            },{
+                $Type:'UI.DataField',
+                Value: PRODUCT_GUID.PRODUCT_ID
+            },{
+                $Type:'UI.DataField',
+                Value: GROSS_AMOUNT
+            },{
+                $Type:'UI.DataField',
+                Value: TAX_AMOUNT
+            },{
+                $Type:'UI.DataField',
+                Value: NET_AMOUNT
+            },{
+                $Type:'UI.DataField',
+                Value: CURRENCY_CODE
+            }
+        ],
+        HeaderInfo  : {
+            $Type : 'UI.HeaderInfoType',
+            TypeName : 'PO Item',
+            TypeNamePlural : 'PO Item',
+            Title:{
+                $Type:'UI.DataField',
+                Value: NODE_KEY
+            },
+            Description: {
+                $Type:'UI.DataField',
+                Value: PO_ITEM_POS
+            },
+            ImageUrl: 'https://1000logos.net/wp-content/uploads/2022/06/Demon-Slayer-Logo.png'
+        },
+        Facets  : [
+            {
+                $Type:'UI.ReferenceFacet',
+                Label: 'Line Item Header',
+                Target: '@UI.FieldGroup#LineItemHeader'
+            },{
+                Label:'Product Detail',
+                $Type: 'UI.ReferenceFacet',
+                Target:'PRODUCT_GUID/@UI.FieldGroup#ProductDetail'
+            }
+        ],
+        FieldGroup#LineItemHeader  : {
+            $Type : 'UI.FieldGroupType',
+            Data :[
+                {
+                    $Type:'UI.DataField',
+                    Value: PO_ITEM_POS
+                },
+                {
+                    $Type:'UI.DataField',
+                    Value: PRODUCT_GUID_NODE_KEY
+                },{
+                    $Type:'UI.DataField',
+                    Value: GROSS_AMOUNT
+                },{
+                    $Type:'UI.DataField',
+                    Value: TAX_AMOUNT
+                },{
+                    $Type:'UI.DataField',
+                    Value: NET_AMOUNT
+                },{
+                    $Type:'UI.DataField',
+                    Value: CURRENCY_CODE
+                },
+            ]
+            
+        },
+
+    }
+);
+annotate Catalogservice.ProductSet with @(
+  UI:{
+    FieldGroup#ProductDetail  : {
+        $Type : 'UI.FieldGroupType',
+        Data:[
+            {
+                $Type:'UI.DataField',
+                Value: PRODUCT_ID
+            },{
+                $Type:'UI.DataField',
+                Value: Description
+            },{
+                $Type:'UI.DataField',
+                Value: TYPE_CODE
+            },{
+                $Type:'UI.DataField',
+                Value:CATEGORY
+            },{
+                $Type:'UI.DataField',
+                Value:SUPPLIER_GUID.COMPANY_NAME
+            }
+        ]
+        
+    },
+  }
+);
+
