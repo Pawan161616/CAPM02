@@ -44,7 +44,6 @@ service Catalogservice@(path:'/CatalogService') {
     };
      entity POItems @(
         title: '{i18n>POItems}',
-        // odata.draft.enabled: true
      ) as projection on transaction.poitems{
         *,
         PARENT_KEY: redirected to POs,

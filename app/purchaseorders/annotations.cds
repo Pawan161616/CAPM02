@@ -1,6 +1,41 @@
 using { Catalogservice } from '../../srv/CatalogService';
 
 //First screen with search field and cloumns
+//Value help in Business Partner Guid field while creating purchase order
+annotate Catalogservice.POs with {
+    PARTNER_GUID@(
+        Common:{
+            Text: PARTNER_GUID.COMPANY_NAME
+        },
+        //below line will decide from where the value help records will be seen
+        ValueList.entity: CatalogService.BPset
+    )
+};
+@cds.odata.valuelist
+//we need to annotate BPSet as well , as it will privde company name records in value help
+annotate Catalogservice.BPSet with @(
+    UI.Identification:[{
+        $Type:'UI.DataField',
+        Value: COMPANY_NAME
+    }]
+);
+annotate Catalogservice.POItems with {
+    PRODUCT_GUID@(
+        Common:{
+            Text:PRODUCT_GUID.NODE_KEY
+        },
+        // ValueList.entity: Catalogservice.ProductSet
+        ValueList.entity: Catalogservice.Description
+    )
+};
+@cds.odata.valuelist
+annotate Catalogservice.ProductSet with @(
+    UI.Identification:[{
+        $Type:'UI.DataField',
+        // Value: NODE_KEY
+        Value: Description
+    }]
+);
 annotate Catalogservice.POs with @(
     UI: {
         //anothation for filters

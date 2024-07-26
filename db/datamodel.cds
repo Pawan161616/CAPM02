@@ -2,7 +2,7 @@ namespace anubhav.db;
 using { cuid, managed, temporal, Currency } from '@sap/cds/common';
 using {anubhav.common} from './common';
 
-type GUID: String(32);
+type GUID: String(36);
 
 context master {
      entity businesspartner {
@@ -82,11 +82,15 @@ context master {
 context transaction {
     entity purchaseorder: common.Amount  {
       key NODE_KEY : GUID;                  	
-      PO_ID : String(24);    	
+      PO_ID : String(24);    
+      //Association is loose coupling i.e. we can create businesspartner individually
+      //no need to create purchase order as well for business partner.	
       PARTNER_GUID: association to master.businesspartner;      	
       LIFECYCLE_STATUS: String(1);	
       OVERALL_STATUS: String(1);
-      Items: Association to many poitems on Items.PARENT_KEY = $self;
+      //Composition is tight coupling i,e. we can not create POItems separately, 
+      //we have to create  a PO and then only POItems are created.
+      Items: Composition of many poitems on Items.PARENT_KEY = $self;
       NOTE: String(256);
     }
     entity poitems: common.Amount {
