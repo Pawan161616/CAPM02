@@ -54,21 +54,34 @@ const mysrvDemo = function(srv){
     });
 
     srv.on("UPDATE","updateEmployeeSrv", async(req,res)=>{
-        let updateData = await cds.transaction().run([
-            UPDATE(employees).set({
-                nameFirst: req.data.nameFirst
-            }).where({ID :  req.data.ID}),
-            UPDATE(employees).set({
-                nameLast: req.data.nameLast
-            }).where({ID: req.data.ID})
-        ]).then((resolve,reject)=>{
-            if(typeof(resolve !== undefined)){
+        // let updateData = await cds.transaction().run([
+        //     UPDATE(employees).set({
+        //         nameFirst: req.data.nameFirst
+        //     }).where({ID :  req.data.ID}),
+        //     UPDATE(employees).set({
+        //         nameLast: req.data.nameLast
+        //     }).where({ID: req.data.ID})
+        // ]).then((resolve,reject)=>{
+        //     if(typeof(resolve !== undefined)){
+        //         return req.data;
+        //     }else{
+        //         req.error(500,"There was an issue in update");
+        //     }
+        // }).catch((err)=>{
+        //     req.error(500,"there is an issue in update:" + err.toString());
+        // })
+
+        
+        let updateData = await cds.tx(async (srv) => {
+            try {
+               await srv.run(UPDATE(employees).set({
+                    nameFirst: req.data.nameFirst,
+                    nameLast: req.data.nameLast
+                }).where({ ID: req.data.ID }));
                 return req.data;
-            }else{
-                req.error(500,"There was an issue in update");
+            } catch (err) {
+                 req.error(500,err.message);
             }
-        }).catch((err)=>{
-            req.error(500,"there is an issue in update:" + err.toString());
         })
 
         return updateData;
