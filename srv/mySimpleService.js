@@ -28,17 +28,28 @@ const mysrvDemo = function(srv){
 
     
     srv.on("CREATE","InsertEmployeeSrv", async(req,res)=>{
-        let returnData = cds.transaction().run([
-            INSERT.into(employees).entries([req.data])
-        ]).then((resolve,reject)=>{
-            if(typeof(resolve) !== undefined){
+        // cds.transaction() is depricated
+        // let returnData = cds.transaction().run([
+        //     INSERT.into(employees).entries([req.data])
+        // ]).then((resolve,reject)=>{
+        //     if(typeof(resolve) !== undefined){
+        //         return req.data;
+        //     }else{
+        //         req.error(500,"There is an issue with Insert");
+        //     }
+        // }).catch(err =>{
+        //     req.error(500,"there was an error " + err);
+        // })
+
+        // using cds.tx() now
+         let returnData = await cds.tx(async (srv) => {
+            try {
+                await srv.run(INSERT.into(employees).entries([req.data]));
                 return req.data;
-            }else{
-                req.error(500,"There is an issue with Insert");
+            } catch (err) {
+                req.error(500, err.message)
             }
-        }).catch(err =>{
-            req.error(500,"there was an error " + err);
-        })
+        });
         return returnData;
     });
 
@@ -64,17 +75,26 @@ const mysrvDemo = function(srv){
     });
 
     srv.on("DELETE","deleteEmployeeSrv", async(req,res)=>{
-        let returnData = await cds.transaction().run([
+        // let returnData = await cds.transaction().run([
             
-            DELETE.from(employees).where(req.data)
-        ]).then((resolve,reject)=>{
-            if(typeof(resolve) !== undefined){
+        //     DELETE.from(employees).where(req.data)
+        // ]).then((resolve,reject)=>{
+        //     if(typeof(resolve) !== undefined){
+        //         return req.data;
+        //     }else{
+        //         req.error(500,"error in deletion");
+        //     }
+        // }).catch((err)=>{
+        //     req.error(500,"there is error:" + err.toString());
+        // });
+
+          let returnData = await cds.tx(async (srv) => {
+            try {
+                await srv.run(DELETE.from(employees).where({ ID: req.data.ID }))
                 return req.data;
-            }else{
-                req.error(500,"error in deletion");
+            } catch (err) {
+                req.error(500, err.message);
             }
-        }).catch((err)=>{
-            req.error(500,"there is error:" + err.toString());
         });
         return returnData;
     })
