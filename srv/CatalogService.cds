@@ -40,7 +40,7 @@ service Catalogservice@(path:'/CatalogService') {
         //all the actions and functions are triggered only when primary key is passed as parameter to them
         //function is only for reading the data and in actions we can do create,update,delete operations b
         function largestOrder() returns array of POs;
-        action boost();
+        action boost() returns String;
     };
      entity POItems @(
         title: '{i18n>POItems}',
@@ -51,3 +51,4 @@ service Catalogservice@(path:'/CatalogService') {
      }
 
 }
+
