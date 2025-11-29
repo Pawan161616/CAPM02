@@ -20,15 +20,16 @@ module.exports = async function () {
     }
   });
   this.on('boost', async req => {
-    try {
-      const ID = req.params[0];
+ try {
+      const ID = req.params[0].NODE_KEY;
       console.log('Your Puchase order with ID --->' + ID + "will be boosted");
       const tx = cds.tx(req);
-      await tx.update(POs).with({
+      let boostResp = await tx.update(POs).set({
         GROSS_AMOUNT: { '+=': 20000 },
         NOTE: "Boosted !"
-      }).where(ID);
-      return "Boost was success!"
+      }).where({NODE_KEY:ID});
+      if(boostResp != 0) 
+        {return "Boost was success!"}else{ req.error(500,"Boost failed");}
     } catch (error) {
       return "Error" + error.toString();
     }
