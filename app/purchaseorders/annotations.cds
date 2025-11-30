@@ -62,7 +62,7 @@ annotate Catalogservice.POs with @(
                 Inline : true
             },{
                 $Type: 'UI.DataField',
-                Value: CURRENCY_CODE
+                Value: CURRENCY_CODE.code
             },{
                 $Type: 'UI.DataField',
                 Value: PARTNER_GUID.COMPANY_NAME
@@ -133,7 +133,7 @@ annotate Catalogservice.POs with @(
                     Value: NET_AMOUNT
                 },{
                     $Type: 'UI.DataField',
-                    Value: CURRENCY_CODE
+                    Value: CURRENCY_CODE.code
                 },{
                     $Type: 'UI.DataField',
                     Value: LIFECYCLE_STATUS
@@ -167,7 +167,7 @@ annotate Catalogservice.POItems with @(
                 Value: NET_AMOUNT
             },{
                 $Type:'UI.DataField',
-                Value: CURRENCY_CODE
+                Value: CURRENCY_CODE.code
             }
         ],
         HeaderInfo  : {
@@ -216,7 +216,7 @@ annotate Catalogservice.POItems with @(
                     Value: NET_AMOUNT
                 },{
                     $Type:'UI.DataField',
-                    Value: CURRENCY_CODE
+                    Value: CURRENCY_CODE.code
                 },
             ]
             
