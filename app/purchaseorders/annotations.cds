@@ -22,8 +22,7 @@ annotate Catalogservice.POItems with {
         Common:{
             Text:PRODUCT_GUID.NODE_KEY
         },
-        // ValueList.entity: Catalogservice.ProductSet
-        ValueList.entity: Catalogservice.Description
+        ValueList.entity: Catalogservice.ProductSet
     )
 };
 @cds.odata.valuelist
