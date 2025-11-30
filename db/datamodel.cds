@@ -50,7 +50,7 @@ context master {
       MEASURE_UNIT	: String(2);
       WEIGHT_MEASURE : Decimal;
       WEIGHT_UNIT	: String(2);
-      CURRENCY_CODE : String(4);	
+      CURRENCY_CODE : Currency;	
       PRICE    : Decimal;           	
       WIDTH    : Decimal;        	
       DEPTH    : Decimal;        	
@@ -100,4 +100,5 @@ context transaction {
       PRODUCT_GUID : Association to master.product;
     }
 }
+
 
