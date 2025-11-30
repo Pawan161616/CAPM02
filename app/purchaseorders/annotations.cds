@@ -1,9 +1,15 @@
 using { Catalogservice } from '../../srv/CatalogService';
 
-//First screen with search field and cloumns
-//Value help in Business Partner Guid field while creating purchase order
+//cds.odata.valuelist will create F4 help in business Partner field with only company_name and primary Key of businesspartner
+annotate Catalogservice.BPSet with @(
+    UI.Identification:[COMPANY_NAME],
+    cds.odata.valuelist
+);
+
+//Changing business partner set with above annotations will also change company name with selected entry from business partner if we apply below annotation.
+//making COMPANY_NAME as common text with annotation applied on association(ie PARTNER_GUID)
 annotate Catalogservice.POs with {
-    PARTNER_GUID@(
+    PARTNER_GUID @(
         Common:{
             Text: PARTNER_GUID.COMPANY_NAME
         },
@@ -11,14 +17,6 @@ annotate Catalogservice.POs with {
         ValueList.entity: CatalogService.BPset
     )
 };
-@cds.odata.valuelist
-//we need to annotate BPSet as well , as it will privde company name records in value help
-annotate Catalogservice.BPSet with @(
-    UI.Identification:[{
-        $Type:'UI.DataField',
-        Value: COMPANY_NAME
-    }]
-);
 annotate Catalogservice.POItems with {
     PRODUCT_GUID@(
         Common:{
