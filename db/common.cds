@@ -18,17 +18,18 @@ type AmountT : Decimal(15, 2)@(
 );
 //instead of 'abstract entity' you can use 'aspect' keyword 
 // abstract entity Amount {
-//      CURRENCY_CODE	:String(4);
+//      CURRENCY_CODE	:Currency;
 //       GROSS_AMOUNT   :AmountT;     	
 //       NET_AMOUNT     :AmountT;     
 //       TAX_AMOUNT     :AmountT;
 // };
 aspect Amount {
-     CURRENCY_CODE	:String(4);
+     CURRENCY_CODE	:Currency;
       GROSS_AMOUNT   :AmountT;     	
       NET_AMOUNT     :AmountT;     
       TAX_AMOUNT     :AmountT;
 };
 
 type PhoneNumber : String(30)@assert.format : '^(\+0?1\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$';
+
 type Email : String(255)@assert.format : '/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/';
